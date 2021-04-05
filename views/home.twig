@@ -1,0 +1,76 @@
+{% extends "layouts/app.twig" %}
+{% block content %}
+
+<div class="align-middle min-w-full overflow-x-auto overflow-hidden sm:rounded-lg" x-data="init()">
+    <Form action="/api/web/aircrafts" method="post">
+        <div>
+            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-600 uppercase">Aircraft Type</label>
+            <div class="relative inline-flex w-full">
+                <svg class="absolute right-0 w-2 h-2 mx-3 mt-3.5 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232">
+                    <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero" />
+                </svg>
+		        <select name="aircraft_type_id" class="w-full pl-2 pr-10 text-gray-600 bg-white border border-gray-300 rounded-lg appearance-none h-9 hover:border-gray-400 focus:outline-none">
+                    {% for aircraftType in aircraftTypes %}
+                        <option value="{{ aircraftType.id }}">{{aircraftType.description }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="my-2">
+            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-600 uppercase">Sizes</label>
+            <div class="relative inline-flex w-full">
+                <svg class="absolute right-0 w-2 h-2 mx-3 mt-3.5 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232">
+                    <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero" />
+                </svg>
+                <select name="size" class="w-full pl-2 pr-10 text-gray-600 bg-white border border-gray-300 rounded-lg appearance-none h-9 hover:border-gray-400 focus:outline-none">
+                    {% for key, size in sizes %}
+                        <option value="{{ key }}">{{ size }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+	    <div class="my-2" >
+            <button class="py-2 px-4 border text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 border-indigo-600 rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out" type="sumbit">Save</button>
+        </div>
+    </Form>
+</div>
+
+<div class="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg">
+    <table class="min-w-full divide-y divide-cool-gray-200">
+        <thead>
+            <tr>
+                <td class='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900'>#</td>
+                <td class='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900'>Description</td>
+                <td class='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900'>Size</td>
+                <td class='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900'>Priority</td>
+            </tr>
+        </thead>
+        
+        <tbody class="bg-white divide-y divide-cool-gray-200">
+            {% for aircraft in aircrafts %}
+                <tr class='bg-white'>
+                    <td class ='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900'>
+                        {{ loop.index }}
+                    </td>
+                        
+                    <td class ='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900'>
+                        {{ aircraft.description }}
+                    </td>
+                    
+		            <td class ='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900'>
+                        {{ aircraft.size }}
+                    </td>
+                    
+                    <td class ='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900'>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ aircraft.priority_color }}-100 text-{{ aircraft.priority_color }}-800 capitalize">
+                                {{ aircraft.priority }}
+                        </span>
+                    </td>
+                </tr>
+	        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
